@@ -1,17 +1,18 @@
 // test/app.test.js
 import { expect } from 'chai';
 import http from 'http';
-import { after, before, describe, it } from 'mocha';
+import { describe, it, before, after } from 'mocha';
 
 let server;
 
 describe('GET /hello', () => {
   before(async () => {
-    server = (await import('../index.js')).default;
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const module = await import('../index.js');
+    server = module.default;
+    await new Promise(resolve => setTimeout(resolve, 300)); // wait for server to start
   });
 
-  after(done => {
+  after((done) => {
     server.close(done);
   });
 
