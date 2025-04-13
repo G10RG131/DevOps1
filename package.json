@@ -1,25 +1,29 @@
 {
   "name": "my-ci-app",
-  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --loader=ts-node/esm"
+    "test": "mocha test/*.test.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G10RG131/DevOps1.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/G10RG131/DevOps1/issues"
+  },
+  "homepage": "https://github.com/G10RG131/DevOps1#readme",
   "dependencies": {
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "@types/chai": "^5.2.1",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^22.14.1",
     "chai": "^5.2.0",
-    "mocha": "^11.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "mocha": "^11.1.0"
   }
 }

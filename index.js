@@ -1,25 +1,11 @@
-import { expect } from 'chai';
-import http from 'http';
-import { describe, it, before, after } from 'mocha';
-import server from '../index.js';  // direct import instead of dynamic
+const express = require('express');
+const app = express();
+const port = 3000;
 
-describe('GET /hello', () => {
-  before(async () => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-  });
+app.get('/hello', (req, res) => {
+  res.send('Hello World!');
+});
 
-  after((done) => {
-    server.close(done);
-  });
-
-  it('should return "Hello World!"', (done) => {
-    http.get('http://localhost:3000/hello', (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        expect(data).to.equal('Hello World!');
-        done();
-      });
-    });
-  });
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
 });
