@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --loader=ts-node/esm test/app.test.js"
+    "test": "mocha --loader=ts-node/esm"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,12 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.14.1",
     "chai": "^5.2.0",
-    "mocha": "^11.1.0"
+    "mocha": "^11.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
