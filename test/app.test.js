@@ -1,18 +1,17 @@
-const chai = require('chai');
-const expect = chai.expect;
-const http = require('http');
+// test/app.test.js
+import { expect } from 'chai';
+import http from 'http';
+import { after, before, describe, it } from 'mocha';
+
+let server;
 
 describe('GET /hello', () => {
-  let server;
-
-  // Start the server before tests
-  before((done) => {
-    server = require('../index');
-    setTimeout(done, 500); // Wait briefly for server to start
+  before(async () => {
+    server = (await import('../index.js')).default;
+    await new Promise(resolve => setTimeout(resolve, 500));
   });
 
-  // Stop the server after tests
-  after((done) => {
+  after(done => {
     server.close(done);
   });
 
