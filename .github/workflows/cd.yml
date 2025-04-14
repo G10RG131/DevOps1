@@ -1,0 +1,47 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Deploy to Canary
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "my-ci-app-canary"
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          healthcheck: "https://my-ci-app-canary.herokuapp.com/hello"
+          rollbackonhealthcheckfailed: true
+          checkstring: "Hello World!"
+      
+      - name: Verify Canary
+        run: |
+          echo "Waiting 5 minutes before production deployment..."
+          sleep 300  # 5 minute canary period
+          # Add any automated verification checks here
+      
+      - name: Deploy to Production
+        if: success()
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "my-ci-app-prod"
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          rollbackonhealthcheckfailed: true
